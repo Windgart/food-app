@@ -1,4 +1,4 @@
-import MainLayout from './Mainlayout';
+import MainLayout from './MainLayout';
 import { render, screen } from '@testing-library/react';
 
 describe('component renders', () => {

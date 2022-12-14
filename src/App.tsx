@@ -1,12 +1,12 @@
 import ThemeProvider from '@/theme/ThemeProvider';
-import MainLayout from '@/components/Layout/Mainlayout';
+import Layout from '@/components/Layout/MainLayout';
 
 function App() {
   return (
     <ThemeProvider>
-      <MainLayout>
+      <Layout>
         <div>content</div>
-      </MainLayout>
+      </Layout>
     </ThemeProvider>
   );
 }

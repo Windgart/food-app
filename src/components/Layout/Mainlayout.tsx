@@ -10,12 +10,12 @@ function MainLayout({ children }: MainLayoutProps) {
   return (
     <AppShell
       header={
-        <Header height={60} p='md'>
+        <Header height={60} p='lg' bg='base.1' withBorder={false}>
           <HeaderContent />
         </Header>
       }
       footer={
-        <Footer height={60} p='md'>
+        <Footer height={60} p='md' bg='base.1' withBorder={false}>
           <FooterContent />
         </Footer>
       }
