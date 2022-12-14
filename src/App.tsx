@@ -1,5 +1,5 @@
 import ThemeProvider from '@/theme/ThemeProvider';
-import MainLayout from './components/Layout/Mainlayout';
+import MainLayout from '@/components/Layout/Mainlayout';
 
 function App() {
   return (
