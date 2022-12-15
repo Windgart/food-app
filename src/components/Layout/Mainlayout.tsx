@@ -6,16 +6,25 @@ interface MainLayoutProps {
   children: React.ReactElement;
 }
 
+const componentsConfig = {
+  height: 130,
+  px: 'xl',
+  py: 'lg',
+  bg: 'base.1',
+  withBorder: false,
+};
+
 function MainLayout({ children }: MainLayoutProps) {
   return (
     <AppShell
+      styles={{ main: { paddingTop: componentsConfig.height } }}
       header={
-        <Header height={60} p='lg' bg='base.1' withBorder={false}>
+        <Header {...componentsConfig}>
           <HeaderContent />
         </Header>
       }
       footer={
-        <Footer height={60} p='md' bg='base.1' withBorder={false}>
+        <Footer {...componentsConfig}>
           <FooterContent />
         </Footer>
       }

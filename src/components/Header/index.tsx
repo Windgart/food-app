@@ -1,5 +1,14 @@
+import AppLogo from '@/components/AppLogo';
+import MainMenu from '@/components/MainMenu';
+import { Flex } from '@mantine/core';
+
 function Header() {
-  return <div>header</div>;
+  return (
+    <Flex direction='column' justify='center'>
+      <AppLogo appName='FOOD APP' />
+      <MainMenu />
+    </Flex>
+  );
 }
 
 export default Header;
