@@ -7,12 +7,13 @@
     "build": "tsc && vite build",
     "coverage": "vitest run --coverage",
     "dev": "vite",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "format": "prettier --write src/**/*.{js,jsx,ts,tsx,css,md,json}  ./.prettierrc",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
     "preview": "vite preview",
     "prepare": "husky install",
-    "test": "vitest --run"
+    "test": "vitest --run",
+    "type-check": "tsc --project tsconfig.json --pretty"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -45,5 +46,10 @@
     "vite": "^4.0.0",
     "vite-tsconfig-paths": "^4.0.2",
     "vitest": "^0.25.8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pnpm format && pnpm lint && pnpm type-check && pnpm test"
+    }
   }
 }
