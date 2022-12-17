@@ -1,13 +1,17 @@
 import AppLogo from '@/components/AppLogo';
 import MainMenu from '@/components/MainMenu';
-import { Flex } from '@mantine/core';
+import { Grid } from '@mantine/core';
 
 function Header() {
   return (
-    <Flex direction='column' justify='center'>
-      <AppLogo appName='FOOD APP' />
-      <MainMenu />
-    </Flex>
+    <Grid justify='center' align='center' gutter={0}>
+      <Grid.Col sm={12} md={4}>
+        <AppLogo appName='FOOD APP' />
+      </Grid.Col>
+      <Grid.Col sm={12} md={5}>
+        <MainMenu />
+      </Grid.Col>
+    </Grid>
   );
 }
 

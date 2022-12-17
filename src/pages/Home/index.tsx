@@ -1,5 +1,13 @@
+import Hero from '@/components/Hero';
+import Spotlights from '@/components/Spotlights';
+
 function HomePage() {
-  return <div>home page</div>;
+  return (
+    <>
+      <Hero />
+      <Spotlights />
+    </>
+  );
 }
 
 export default HomePage;

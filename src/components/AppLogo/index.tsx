@@ -7,10 +7,10 @@ interface AppLogoProps {
 }
 
 function AppLogo({ appName, subtext }: AppLogoProps) {
-  const fontColor = 'gray.0';
+  const fontColor = 'contrast.1';
   return (
     <Flex direction='column' gap={2} justify='center' align='center'>
-      <Image width={48} src={LogoPicture} alt={appName} />
+      <Image width={40} src={LogoPicture} alt={appName} />
       <Text
         color={fontColor}
         sx={{

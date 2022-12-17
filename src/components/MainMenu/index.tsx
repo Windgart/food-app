@@ -1,12 +1,26 @@
-import { Flex, Text, MediaQuery, UnstyledButton, Image } from '@mantine/core';
+import {
+  Flex,
+  Text,
+  UnstyledButton,
+  useMantineTheme,
+  Burger,
+  Drawer,
+  NavLink,
+} from '@mantine/core';
+import { useMediaQuery, useToggle } from '@mantine/hooks';
 import { options } from './menuConfigs';
 
 function MainMenu() {
-  const renderOptions = options.map(({ id, name, image }) => (
+  const { breakpoints, colors } = useMantineTheme();
+  const isTablet = useMediaQuery(`(min-width: ${breakpoints.md}px)`);
+  const [showMobileMenu, toggleMenu] = useToggle();
+
+  const handleCloseMenu = () => toggleMenu();
+
+  const renderOptions = options.map(({ id, name }) => (
     <UnstyledButton key={id}>
-      <Flex direction='row'>
-        <Image height={15} width='auto' src={image} />
-        <Text ml={5} sx={{ fontFamily: 'Raleway', fontWeight: 300, fontSize: 12 }} color='gray.0'>
+      <Flex direction='row' align='center'>
+        <Text sx={{ fontFamily: 'Raleway', fontWeight: 500, fontSize: 15 }} color='contrast.1'>
           {name}
         </Text>
       </Flex>
@@ -14,13 +28,20 @@ function MainMenu() {
   ));
 
   return (
-    <Flex mt={10} direction='row' justify='center' align='center'>
-      <MediaQuery smallerThan='md' styles={{ display: 'none' }}>
-        <Flex justify='center' gap={30} sx={{ backgroundColor: 'transparent' }}>
-          {renderOptions}
-        </Flex>
-      </MediaQuery>
-    </Flex>
+    <>
+      <Flex justify='center' gap={30}>
+        {isTablet ? (
+          renderOptions
+        ) : (
+          <Burger color={colors.contrast[1]} opened={showMobileMenu} onClick={handleCloseMenu} />
+        )}
+      </Flex>
+      <Drawer opened={showMobileMenu} onClose={handleCloseMenu}>
+        {options.map((item) => (
+          <NavLink variant='filled' key={item.id} label={item.name} />
+        ))}
+      </Drawer>
+    </>
   );
 }
 
