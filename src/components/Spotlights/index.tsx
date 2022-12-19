@@ -43,7 +43,7 @@ function Spotlights() {
   ));
 
   return (
-    <Flex bg='soft.1' py={90} direction='row' wrap='wrap' gap={60} justify='center'>
+    <Flex bg='soft.1' py={80} direction='row' wrap='wrap' gap={60} justify='center'>
       {renderItems}
     </Flex>
   );
