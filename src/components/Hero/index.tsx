@@ -3,8 +3,8 @@ import Food from '@/assets/images/diet.png';
 
 function Hero() {
   return (
-    <Flex bg='secondary.2' direction='column' justify='center'>
-      <Container size='md' py={60}>
+    <Flex bg='secondary.2' align='center' direction='column' justify='center'>
+      <Container size='sm' py={60}>
         <Grid justify='center' align='center' gutter={30}>
           <Grid.Col order={2} orderMd={1} sm={12} md={5}>
             <Title
