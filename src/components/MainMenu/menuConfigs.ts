@@ -17,15 +17,15 @@ export const options = [
     image: MenuIcon,
   },
   {
-    id: 3,
-    name: 'My favorites',
-    to: ROUTES.myFavorites,
-    image: ComboIcon,
-  },
-  {
     id: 4,
     name: 'My orders',
     to: ROUTES.myOrders,
     image: ReservationIcon,
+  },
+  {
+    id: 3,
+    name: 'My favorites',
+    to: ROUTES.myFavorites,
+    image: ComboIcon,
   },
 ];

@@ -9,14 +9,15 @@ import {
 } from '@mantine/core';
 import { useMediaQuery, useToggle } from '@mantine/hooks';
 import { options } from './menuConfigs';
+import { useNavigate } from 'react-router-dom';
 
 function MainMenu() {
   const { breakpoints, colors } = useMantineTheme();
   const isTablet = useMediaQuery(`(min-width: ${breakpoints.md}px)`);
   const [showMobileMenu, toggleMenu] = useToggle();
 
-  // using window object to change location instead of React Router navigate hook because the menu is out of the provider
-  const navigate = (url: string) => () => (window.location.href = url);
+  const n = useNavigate();
+  const navigate = (url: string) => () => n(url);
 
   const handleCloseMenu = () => toggleMenu();
 

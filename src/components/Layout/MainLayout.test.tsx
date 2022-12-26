@@ -1,6 +1,7 @@
 import MainLayout from './MainLayout';
 import { render, screen } from '@testing-library/react';
 import ThemeProvider from '@/theme/ThemeProvider';
+import { BrowserRouter } from 'react-router-dom';
 
 // Need to mock matchMedia for Mantine components
 
@@ -21,11 +22,13 @@ Object.defineProperty(window, 'matchMedia', {
 describe('component renders', () => {
   test('sum test', () => {
     render(
-      <ThemeProvider>
-        <MainLayout>
-          <div>hello</div>
-        </MainLayout>
-      </ThemeProvider>,
+      <BrowserRouter>
+        <ThemeProvider>
+          <MainLayout>
+            <div>hello</div>
+          </MainLayout>
+        </ThemeProvider>
+      </BrowserRouter>,
     );
     expect(screen.getByText('hello')).toBeDefined();
   });

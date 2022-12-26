@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Layout from '@/components/Layout/MainLayout';
 import { Flex } from '@mantine/core';
 import Carousel from '@/components/Carousel';
 import { v4 as UUID } from 'uuid';
@@ -26,16 +27,18 @@ function MealsMenu() {
   }, []);
 
   return (
-    <Flex direction='column' py={30} justify='center' align='center' bg='secondary.2'>
-      <Headlines text='Our Menu' otherProps={{ py: 30 }} />
-      <Carousel carouselName='Best Sellers' carouselData={mealData} fetchMore={handleFetchMore} />
-      <Carousel
-        carouselName='Trending'
-        carouselData={mealData}
-        fetchMore={handleFetchMore}
-        pb={60}
-      />
-    </Flex>
+    <Layout>
+      <Flex direction='column' py={30} justify='center' align='center' bg='secondary.2'>
+        <Headlines text='Our Menu' otherProps={{ py: 30 }} />
+        <Carousel carouselName='Best Sellers' carouselData={mealData} fetchMore={handleFetchMore} />
+        <Carousel
+          carouselName='Trending'
+          carouselData={mealData}
+          fetchMore={handleFetchMore}
+          pb={60}
+        />
+      </Flex>
+    </Layout>
   );
 }
 

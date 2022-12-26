@@ -1,5 +1,4 @@
 import ThemeProvider from '@/theme/ThemeProvider';
-import Layout from '@/components/Layout/MainLayout';
 import { server } from '@/lib/mirage/config';
 import Router from '@/router';
 import ContextProvider from './context';
@@ -9,9 +8,7 @@ function App() {
   return (
     <ContextProvider>
       <ThemeProvider>
-        <Layout>
-          <Router />
-        </Layout>
+        <Router />
       </ThemeProvider>
     </ContextProvider>
   );
