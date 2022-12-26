@@ -3,6 +3,7 @@ import Order from '@/assets/images/process/order.png';
 import Cooking from '@/assets/images/process/cooking.png';
 import Delivery from '@/assets/images/process/delivery.png';
 import Enjoy from '@/assets/images/process/enjoy.png';
+import Headlines from '@/components/Headlines';
 
 function Process() {
   const { Item } = Timeline;
@@ -51,10 +52,8 @@ function Process() {
   ));
 
   return (
-    <Flex bg='secondary.2' px={60} py={100} justify='center' direction='column' align='center'>
-      <Text color='base.5' lh={1} mb={39} fw={700} size={80}>
-        How it works?
-      </Text>
+    <Flex bg='secondary.2' px={60} py={50} justify='center' direction='column' align='center'>
+      <Headlines text='How it works?' upperCased otherProps={{ mb: 30 }} />
       <Timeline lineWidth={6} active={4} color='base.1'>
         {renderItems}
       </Timeline>

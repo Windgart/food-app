@@ -1,7 +1,8 @@
-import { Flex, Box, Image, Text } from '@mantine/core';
+import { Flex, Box, Image, Text, Title } from '@mantine/core';
 import ComboIcon from '@/assets/images/fast-food.png';
 import ReservationIcon from '@/assets/images/phone-food.png';
 import AboutUs from '@/assets/images/courier.png';
+import Headlines from '@/components/Headlines';
 
 function Spotlights() {
   const badgesConfig = [
@@ -24,27 +25,36 @@ function Spotlights() {
 
   const renderItems = badgesConfig.map(({ id, img, text }) => (
     <Box w={150} h='auto' key={id}>
-      <Box
-        sx={(theme) => ({
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-
-          width: 150,
-          height: 150,
-          backgroundColor: theme.colors.base[1],
+      <Flex
+        align='center'
+        justify='center'
+        w={150}
+        h={150}
+        bg='base.1'
+        sx={{
           borderRadius: '50%',
-        })}
+        }}
       >
         <Image height={90} width='auto' src={img} />
-      </Box>
+      </Flex>
       <Text color='base.3'>{text}</Text>
     </Box>
   ));
 
   return (
-    <Flex bg='soft.1' py={80} direction='row' wrap='wrap' gap={60} justify='center'>
-      {renderItems}
+    <Flex
+      bg='secondary.2'
+      py={30}
+      direction='column'
+      wrap='wrap'
+      gap={60}
+      justify='center'
+      align='center'
+    >
+      <Headlines upperCased text='Our services' />
+      <Flex wrap='wrap' gap={60} justify='center' direction='row'>
+        {renderItems}
+      </Flex>
     </Flex>
   );
 }
