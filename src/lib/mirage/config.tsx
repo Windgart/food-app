@@ -38,6 +38,9 @@ export const server = createServer({
           MealPicture6,
         ]);
       },
+      isFavorite() {
+        return false;
+      },
     }),
   },
   seeds(server) {

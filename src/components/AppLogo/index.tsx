@@ -11,28 +11,10 @@ function AppLogo({ appName, subtext }: AppLogoProps) {
   return (
     <Flex direction='column' gap={2} justify='center' align='center'>
       <Image width={40} src={LogoPicture} alt={appName} />
-      <Text
-        color={fontColor}
-        sx={{
-          fontFamily: 'Oswald, san-serif',
-          fontWeight: 700,
-          letterSpacing: 2,
-          fontSize: 18,
-          lineHeight: 1,
-        }}
-      >
+      <Text color={fontColor} ff='Oswald, san-serif' fw={700} lts={2} size={18} lh={1}>
         {appName || 'text'}
       </Text>
-      <Text
-        color={fontColor}
-        sx={{
-          fontFamily: 'Oswald, san-serif',
-          fontWeight: 500,
-          letterSpacing: 2,
-          fontSize: 10,
-          lineHeight: 1,
-        }}
-      >
+      <Text color={fontColor} ff='Oswald, san-serif' fw={500} lts={2} size={10} lh={1}>
         {subtext?.toLocaleUpperCase() || ''}
       </Text>
     </Flex>

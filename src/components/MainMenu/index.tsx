@@ -20,7 +20,7 @@ function MainMenu() {
   const renderOptions = options.map(({ id, name }) => (
     <UnstyledButton key={id}>
       <Flex direction='row' align='center'>
-        <Text sx={{ fontFamily: 'Raleway', fontWeight: 500, fontSize: 15 }} color='contrast.1'>
+        <Text ff='Raleway' fw={500} size={15} color='contrast.1'>
           {name}
         </Text>
       </Flex>

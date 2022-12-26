@@ -12,13 +12,13 @@ export const options = [
   },
   {
     id: 2,
-    name: 'Combos',
+    name: 'My favorites',
     to: '',
     image: ComboIcon,
   },
   {
     id: 3,
-    name: 'Reservations',
+    name: 'My orders',
     to: '',
     image: ReservationIcon,
   },

@@ -7,9 +7,10 @@ interface CarouselComponentProps {
   carouselName?: string;
   carouselData?: MealModel[];
   fetchMore: () => void;
+  pb?: number;
 }
 
-function CarouselComponent({ carouselName, carouselData, fetchMore }: CarouselComponentProps) {
+function CarouselComponent({ carouselName, carouselData, fetchMore, pb }: CarouselComponentProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const renderSlides = carouselData?.map((item) => (
@@ -31,14 +32,14 @@ function CarouselComponent({ carouselName, carouselData, fetchMore }: CarouselCo
 
   return (
     <Flex bg='soft.1' py={20} direction='row' wrap='wrap' justify='center'>
-      <Container size='lg'>
-        <Text sx={{ fontFamily: 'Oswald', fontWeight: 700, fontSize: 35 }} mb={10} color='base.5'>
+      <Container size='lg' pb={pb}>
+        <Text ff='Oswald' fw={700} size={35} mb={10} color='base.5'>
           {carouselName?.toUpperCase() || 'Carousel'}
         </Text>
         <Carousel
           styles={(theme) => ({
             container: {
-              width: 290,
+              width: 340,
               [`@media (min-width: ${theme.breakpoints.sm}px)`]: {
                 width: 640,
               },

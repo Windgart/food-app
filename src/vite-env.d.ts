@@ -6,4 +6,5 @@ interface MealModel {
   image: string;
   categories: string[];
   rating: number;
+  isFavorite: boolean;
 }

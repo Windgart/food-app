@@ -15,7 +15,7 @@ function Hero() {
             >
               HOPE YOU LIKE <br /> YUMI FOOD
             </Title>
-            <Text my={10} sx={{ fontFamily: 'Raleway' }} color='base.3' size={14}>
+            <Text my={10} ff='Raleway' color='base.3' size={14}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium fugiat natus rem
               ut amet sint, earum ipsum reiciendis vitae labore. Dolor ipsum dicta aperiam rerum?
               Recusandae neque sed natus vel.
