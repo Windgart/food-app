@@ -15,10 +15,13 @@ function MainMenu() {
   const isTablet = useMediaQuery(`(min-width: ${breakpoints.md}px)`);
   const [showMobileMenu, toggleMenu] = useToggle();
 
+  // using window object to change location instead of React Router navigate hook because the menu is out of the provider
+  const navigate = (url: string) => () => (window.location.href = url);
+
   const handleCloseMenu = () => toggleMenu();
 
-  const renderOptions = options.map(({ id, name }) => (
-    <UnstyledButton key={id}>
+  const renderOptions = options.map(({ id, name, to }) => (
+    <UnstyledButton key={id} onClick={navigate(to)}>
       <Flex direction='row' align='center'>
         <Text ff='Raleway' fw={500} size={15} color='contrast.1'>
           {name}
@@ -38,7 +41,12 @@ function MainMenu() {
       </Flex>
       <Drawer opened={showMobileMenu} onClose={handleCloseMenu}>
         {options.map((item) => (
-          <NavLink variant='filled' key={item.id} label={item.name} />
+          <NavLink
+            onClick={() => navigate(item.to)}
+            variant='filled'
+            key={item.id}
+            label={item.name}
+          />
         ))}
       </Drawer>
     </>
