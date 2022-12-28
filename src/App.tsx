@@ -5,8 +5,10 @@ import ContextProvider from './context';
 import { ENDPOINTS } from './utils/constants';
 
 function App() {
+  // Mocked API endpoints intercepting GET requests
   server.get(`api/${ENDPOINTS.meals}`);
   server.get(`api/${ENDPOINTS.highRate}`);
+
   return (
     <ContextProvider>
       <ThemeProvider>
