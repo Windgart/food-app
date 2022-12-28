@@ -1,5 +1,6 @@
 import { SetStateAction, createContext, useState, useEffect } from 'react';
 import { ENDPOINTS } from '@/utils/constants';
+import { showNotification } from '@mantine/notifications';
 
 interface ContextProviderProps {
   children: React.ReactElement;
@@ -22,6 +23,7 @@ function ContextProvider({ children }: ContextProviderProps) {
   const [loadingFetchMeals, setLoadingMeals] = useState(true);
 
   const handleFavoriteLogic = (itemToHandle: string) => {
+    const alreadyFavorite = fetchedMeals.find((meal) => meal?.id === itemToHandle);
     if (fetchedMeals.length) {
       setFetchedMeals((prevState) =>
         prevState.map((meal) => {
@@ -31,6 +33,13 @@ function ContextProvider({ children }: ContextProviderProps) {
         }),
       );
     }
+    showNotification({
+      title: alreadyFavorite?.isFavorite
+        ? 'Meal removed from favorites!'
+        : 'Meal added to favorites!',
+      message: '',
+      color: alreadyFavorite?.isFavorite ? 'red' : 'green',
+    });
   };
 
   const handleOrdersLogic = (itemToHandle: string) => {
@@ -40,6 +49,11 @@ function ContextProvider({ children }: ContextProviderProps) {
         ? prevState.filter((id) => id !== itemToHandle)
         : [...prevState, itemToHandle]),
     ]);
+    showNotification({
+      title: alreadyInOrders ? 'Meal removed from orders!' : 'Meal added to orders!',
+      message: '',
+      color: alreadyInOrders ? 'red' : 'green',
+    });
   };
 
   useEffect(() => {
@@ -47,9 +61,9 @@ function ContextProvider({ children }: ContextProviderProps) {
       fetch(`api/${ENDPOINTS.meals}`).then((res) => res.json()),
       fetch(`api/${ENDPOINTS.highRate}`).then((res) => res.json()),
     ])
-      .then(([mealsRes, highRateRes]) =>
-        setFetchedMeals([...mealsRes.meals, highRateRes.highRateRes]),
-      )
+      .then(([mealsRes, highRateRes]) => {
+        setFetchedMeals([...mealsRes.meals, ...highRateRes.hightRates]);
+      })
       .finally(() => setLoadingMeals(false));
   }, []);
 

@@ -39,9 +39,9 @@ function MealsMenu() {
 
   const memoizedMeals = useMemo(() => {
     if (fetchedMeals.length) {
-      return fetchedMeals.filter((item) => item?.rating < 5).slice(limitHighRate);
+      return fetchedMeals.filter((item) => item?.rating === 5).slice(0, limitHighRate);
     } else return [];
-  }, [fetchedMeals, limitHighRate]);
+  }, [limitHighRate, fetchedMeals]);
 
   return (
     <Layout>

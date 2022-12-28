@@ -28,7 +28,7 @@ class MealClass {
     if (highRate) {
       return 5;
     } else {
-      return faker.helpers.arrayElement([4.0, 4.1, 4.5, 4.3, 4.4, 4.6, 4.8, 5.0]);
+      return faker.helpers.arrayElement([4.0, 4.1, 4.5, 4.3, 4.4, 4.6, 4.8]);
     }
   }
   image() {

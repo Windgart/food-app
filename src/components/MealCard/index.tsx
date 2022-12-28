@@ -60,7 +60,7 @@ function RecipeCard({
         </Flex>
         <Flex w='100%' direction='row' justify='space-between' align='center'>
           <Button onClick={handleAddToCart} fullWidth radius='xl' color='base.1' mr={6}>
-            {alreadyOnCart ? 'Remove from cart' : 'Add to cart'}
+            {alreadyOnCart ? 'Remove from orders' : 'Add to orders'}
           </Button>
           <ActionIcon onClick={handleClickFavorites} variant='transparent'>
             <IconHeart
