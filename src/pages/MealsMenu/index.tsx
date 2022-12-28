@@ -1,42 +1,75 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext, useCallback, useMemo } from 'react';
 import Layout from '@/components/Layout/MainLayout';
-import { Flex } from '@mantine/core';
+import { Button, Container, Flex, Grid } from '@mantine/core';
 import Carousel from '@/components/Carousel';
-import { v4 as UUID } from 'uuid';
 import Headlines from '@/components/Headlines';
+import { AppContext } from '@/context';
+import MealCard from '@/components/MealCard';
 
 function MealsMenu() {
-  const [mealData, setMealData] = useState<MealModel[]>([]);
+  const [limit, setLimit] = useState(8);
+  const [limitHighRate, setLimitHighRate] = useState(8);
 
-  const handleFetchMore = async () => {
-    fetch('/api/meals')
-      .then((res) => res.json())
-      .then((data) => {
-        // update the id´s to avoid key conflict
-        const updateIds = data.meals.map((item: MealModel) => ({ ...item, id: UUID() }));
-        setMealData((prevState) => [...prevState, ...updateIds]);
-      });
+  const { fetchedMeals, mealOrders, handleOrdersLogic, handleFavoriteLogic, loadingFetchMeals } =
+    useContext(AppContext);
+
+  const isAlreadyOnCart = useCallback(
+    (itemId: string) => mealOrders.some((id) => id === itemId),
+    [mealOrders],
+  );
+
+  const renderOtherMeals = fetchedMeals.slice(0, limit).map((meal) => (
+    <Grid.Col xs={12} sm={6} md={4} lg={3} key={meal.id}>
+      <MealCard
+        alreadyOnCart={isAlreadyOnCart(meal.id)}
+        onAddToCart={handleOrdersLogic}
+        onClickFavorite={handleFavoriteLogic}
+        {...meal}
+      />
+    </Grid.Col>
+  ));
+
+  const handleFetchMore = () => {
+    setLimitHighRate((prevState) => prevState + 8);
   };
 
-  useEffect(() => {
-    fetch('/api/meals')
-      .then((res) => res.json())
-      .then((json) => {
-        setMealData(json.meals);
-      });
-  }, []);
+  const handleShowMoreMeals = () => {
+    setLimit((prevState) => prevState + 8);
+  };
+
+  const memoizedMeals = useMemo(() => {
+    if (fetchedMeals.length) {
+      return fetchedMeals.filter((item) => item?.rating < 5).slice(limitHighRate);
+    } else return [];
+  }, [fetchedMeals, limitHighRate]);
 
   return (
     <Layout>
       <Flex direction='column' py={30} justify='center' align='center' bg='secondary.2'>
         <Headlines text='Our Menu' otherProps={{ py: 30 }} />
-        <Carousel carouselName='Best Sellers' carouselData={mealData} fetchMore={handleFetchMore} />
         <Carousel
-          carouselName='Trending'
-          carouselData={mealData}
+          isOnCart={isAlreadyOnCart}
+          loading={loadingFetchMeals}
+          carouselName='Best Sellers'
+          carouselData={memoizedMeals}
           fetchMore={handleFetchMore}
-          pb={60}
+          onAddToCart={handleOrdersLogic}
+          onClickFavorite={handleFavoriteLogic}
         />
+        <Container size='md'>
+          <Grid my={50}>
+            {renderOtherMeals}
+            <Grid.Col py={30} span={12}>
+              <Flex justify='center'>
+                {limit <= fetchedMeals.length ? (
+                  <Button onClick={handleShowMoreMeals} radius='lg' px={30}>
+                    See more meals
+                  </Button>
+                ) : null}
+              </Flex>
+            </Grid.Col>
+          </Grid>
+        </Container>
       </Flex>
     </Layout>
   );

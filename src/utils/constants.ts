@@ -5,3 +5,8 @@ export const ROUTES = {
   myFavorites: '/favorites',
   about: '/about',
 } as const;
+
+export const ENDPOINTS = {
+  meals: 'meal',
+  highRate: 'hightRate',
+} as const;

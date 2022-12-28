@@ -8,3 +8,6 @@ interface MealModel {
   rating: number;
   isFavorite: boolean;
 }
+
+type AddItemSignature = (item: MealModel) => void;
+type ActionWithIdSignature = (item: string) => void;

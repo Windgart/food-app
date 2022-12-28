@@ -1,60 +1,67 @@
-import { SetStateAction, createContext, useState } from 'react';
+import { SetStateAction, createContext, useState, useEffect } from 'react';
+import { ENDPOINTS } from '@/utils/constants';
 
 interface ContextProviderProps {
   children: React.ReactElement;
 }
 
-type AddItemSignature = (item: MealModel) => void;
-type ActionWithIdSignature = (item: string) => void;
-
 interface StoreContext {
-  fetchedRecipes: MealModel[];
-  mealOrders: MealModel[];
-  favoriteMeals: MealModel[];
-  addMealToFavorites: AddItemSignature;
-  removeFromFavorites: ActionWithIdSignature;
-  addToMealOrders: AddItemSignature;
-  removeFromMealOrders: ActionWithIdSignature;
-  setFetchedRecipes: React.Dispatch<SetStateAction<MealModel[]>>;
+  fetchedMeals: MealModel[];
+  mealOrders: string[];
+  setFetchedMeals: React.Dispatch<SetStateAction<MealModel[]>>;
+  loadingFetchMeals: boolean;
+  handleOrdersLogic: ActionWithIdSignature;
+  handleFavoriteLogic: ActionWithIdSignature;
 }
 
+export const AppContext = createContext({} as StoreContext);
+
 function ContextProvider({ children }: ContextProviderProps) {
-  const AppContext = createContext({} as StoreContext);
-  const [fetchedRecipes, setFetchedRecipes] = useState<MealModel[]>([]);
-  const [mealOrders, setMealOrders] = useState<MealModel[]>([]);
-  const [favoriteMeals, setFavoriteMeals] = useState<MealModel[]>([]);
+  const [fetchedMeals, setFetchedMeals] = useState<MealModel[]>([]);
+  const [mealOrders, setMealOrders] = useState<string[]>([]);
+  const [loadingFetchMeals, setLoadingMeals] = useState(true);
 
-  const addMealToFavorites = (itemToAdd: MealModel) => {
-    const alreadyInFavorites = favoriteMeals.some(({ id }) => id === itemToAdd.id);
-    if (alreadyInFavorites) return;
-    setFavoriteMeals((prevState) => [...prevState, itemToAdd]);
+  const handleFavoriteLogic = (itemToHandle: string) => {
+    if (fetchedMeals.length) {
+      setFetchedMeals((prevState) =>
+        prevState.map((meal) => {
+          if (meal?.id === itemToHandle) {
+            return { ...meal, isFavorite: !meal.isFavorite };
+          } else return meal;
+        }),
+      );
+    }
   };
 
-  const removeFromFavorites = (itemToRemove: string) => {
-    setFavoriteMeals((prevState) => [...prevState.filter(({ id }) => id === itemToRemove)]);
+  const handleOrdersLogic = (itemToHandle: string) => {
+    const alreadyInOrders = mealOrders.some((id) => id === itemToHandle);
+    setMealOrders((prevState) => [
+      ...(alreadyInOrders
+        ? prevState.filter((id) => id !== itemToHandle)
+        : [...prevState, itemToHandle]),
+    ]);
   };
 
-  const addToMealOrders = (itemToAdd: MealModel) => {
-    const alreadyInFavorites = mealOrders.some(({ id }) => id === itemToAdd.id);
-    if (alreadyInFavorites) return;
-    setMealOrders((prevState) => [...prevState, itemToAdd]);
-  };
-
-  const removeFromMealOrders = (itemToRemove: string) => {
-    setMealOrders((prevState) => [...prevState.filter(({ id }) => id === itemToRemove)]);
-  };
+  useEffect(() => {
+    Promise.all([
+      fetch(`api/${ENDPOINTS.meals}`).then((res) => res.json()),
+      fetch(`api/${ENDPOINTS.highRate}`).then((res) => res.json()),
+    ])
+      .then(([mealsRes, highRateRes]) =>
+        setFetchedMeals([...mealsRes.meals, highRateRes.highRateRes]),
+      )
+      .finally(() => setLoadingMeals(false));
+  }, []);
 
   return (
     <AppContext.Provider
       value={{
-        fetchedRecipes,
+        fetchedMeals,
         mealOrders,
-        favoriteMeals,
-        addMealToFavorites,
-        removeFromFavorites,
-        addToMealOrders,
-        removeFromMealOrders,
-        setFetchedRecipes,
+        setFetchedMeals,
+        loadingFetchMeals,
+        handleOrdersLogic,
+        handleFavoriteLogic,
       }}
     >
       {children}

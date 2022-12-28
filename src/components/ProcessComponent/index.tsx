@@ -1,4 +1,4 @@
-import { Flex, Timeline, Text, Avatar, Container } from '@mantine/core';
+import { Flex, Timeline, Text, Avatar } from '@mantine/core';
 import Order from '@/assets/images/process/order.png';
 import Cooking from '@/assets/images/process/cooking.png';
 import Delivery from '@/assets/images/process/delivery.png';

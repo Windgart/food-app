@@ -1,4 +1,4 @@
-import { Flex, Box, Image, Text, Title } from '@mantine/core';
+import { Flex, Box, Image, Text } from '@mantine/core';
 import ComboIcon from '@/assets/images/fast-food.png';
 import ReservationIcon from '@/assets/images/phone-food.png';
 import AboutUs from '@/assets/images/courier.png';
@@ -52,7 +52,7 @@ function Spotlights() {
       align='center'
     >
       <Headlines upperCased text='Our services' />
-      <Flex wrap='wrap' gap={60} justify='center' direction='row'>
+      <Flex pb={60} wrap='wrap' gap={60} justify='center' direction='row'>
         {renderItems}
       </Flex>
     </Flex>

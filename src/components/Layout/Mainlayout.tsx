@@ -3,7 +3,7 @@ import FooterContent from '@/components/Footer';
 import { AppShell, Header } from '@mantine/core';
 
 interface MainLayoutProps {
-  children: React.ReactElement;
+  children: React.ReactElement | React.ReactElement[];
 }
 
 const componentsConfig = {

@@ -7,11 +7,14 @@ import { IconFaceIdError } from '@tabler/icons';
 
 interface CarouselComponentProps {
   carouselName?: string;
-  carouselData?: MealModel[];
+  carouselData?: MealModel[] | null;
   fetchMore: () => void;
   pb?: number;
   loading?: boolean;
   error?: boolean;
+  onAddToCart: ActionWithIdSignature;
+  isOnCart: (id: string) => boolean;
+  onClickFavorite: ActionWithIdSignature;
 }
 
 function CarouselComponent({
@@ -21,12 +24,20 @@ function CarouselComponent({
   pb,
   loading,
   error = false,
+  onAddToCart,
+  isOnCart,
+  onClickFavorite,
 }: CarouselComponentProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const renderSlides = carouselData?.map((item) => (
     <Carousel.Slide size={250} key={item.id}>
-      <MealCard {...item} />
+      <MealCard
+        alreadyOnCart={isOnCart(item.id)}
+        onAddToCart={onAddToCart}
+        onClickFavorite={onClickFavorite}
+        {...item}
+      />
     </Carousel.Slide>
   ));
 
@@ -48,7 +59,7 @@ function CarouselComponent({
 
   // got to add side effect to fetch more due to onSlideChange callback losing context when invoked
   useEffect(() => {
-    if (currentIndex + 1 === carouselData?.length) {
+    if (carouselData && currentIndex + 1 === carouselData?.length) {
       fetchMore();
     }
   }, [currentIndex]);

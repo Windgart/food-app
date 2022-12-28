@@ -1,4 +1,4 @@
-import { Flex, Container, Grid, Title, Text, Image, Button } from '@mantine/core';
+import { Flex, Container, Grid, Text, Image, Button } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import Food from '@/assets/images/diet.png';
 import { ROUTES } from '@/utils/constants';
