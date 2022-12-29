@@ -51,7 +51,7 @@ function ContextProvider({ children }: ContextProviderProps) {
     ]);
     showNotification({
       title: alreadyInOrders ? 'Meal removed from orders!' : 'Meal added to orders!',
-      message: '',
+      message: 'Check My Orders page to see the updated list',
       color: alreadyInOrders ? 'red' : 'green',
     });
   };

@@ -49,7 +49,21 @@ function MainMenu() {
       </Flex>
       <Drawer opened={showMobileMenu} onClose={handleCloseMenu}>
         {options.map((item) => (
-          <NavLink onClick={navigate(item.to)} variant='filled' key={item.id} label={item.name} />
+          <Flex w='80%' direction='column' key={item?.id}>
+            <Indicator
+              label={item?.id === 4 ? mealOrders?.length : ''}
+              inline
+              size={item?.id === 4 ? 18 : 0}
+              position='middle-center'
+            >
+              <NavLink
+                onClick={navigate(item.to)}
+                variant='filled'
+                key={item.id}
+                label={item.name}
+              />
+            </Indicator>
+          </Flex>
         ))}
       </Drawer>
     </>
