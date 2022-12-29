@@ -104,10 +104,10 @@ function OrdersPage() {
             color='red'
             mr={15}
           >
-            Remove
+            Cancel order
           </Button>
           <Button onClick={onCloseModal} color='blue'>
-            Cancel
+            Never mind
           </Button>
         </Flex>
       </Modal>

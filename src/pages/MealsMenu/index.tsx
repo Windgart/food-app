@@ -46,7 +46,7 @@ function MealsMenu() {
         <Carousel
           isOnCart={isAlreadyOnCart}
           loading={loadingFetchMeals}
-          carouselName='Best Sellers'
+          carouselName='Top Rated'
           carouselData={memoizedHighRateMeals}
           fetchMore={handleFetchMore}
           onAddToCart={handleOrdersLogic}
