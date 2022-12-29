@@ -11,26 +11,27 @@ import MealPicture8 from '@/assets/images/meals/m8.jpg';
 import MealPicture9 from '@/assets/images/meals/m9.jpg';
 import { ENDPOINTS } from '@/utils/constants';
 
-class MealClass {
+function rating(highRate: boolean) {
+  if (highRate) {
+    return 5;
+  } else {
+    return faker.helpers.arrayElement([4.0, 4.1, 4.5, 4.3, 4.4, 4.6, 4.8]);
+  }
+}
+
+const defaultProperties = {
   id() {
     return faker.datatype.uuid();
-  }
+  },
   title() {
     return faker.commerce.productName();
-  }
+  },
   categories() {
     return faker.helpers.arrayElements(
       ['HIGH-PROTEIN', 'HEALTHY', 'LOW-CARB', 'GLUTEN-FREE', 'HIGH-FIBER', 'SUGAR-FREE'],
       3,
     );
-  }
-  rating(highRate: boolean) {
-    if (highRate) {
-      return 5;
-    } else {
-      return faker.helpers.arrayElement([4.0, 4.1, 4.5, 4.3, 4.4, 4.6, 4.8]);
-    }
-  }
+  },
   image() {
     return faker.helpers.arrayElement([
       MealPicture1,
@@ -43,19 +44,10 @@ class MealClass {
       MealPicture8,
       MealPicture9,
     ]);
-  }
+  },
   isFavorite() {
     return false;
-  }
-}
-
-const mealProperties = new MealClass();
-const defaultProperties = {
-  id: mealProperties.id,
-  title: mealProperties.title,
-  categories: mealProperties.categories,
-  image: mealProperties.image,
-  isFavorite: mealProperties.isFavorite,
+  },
 };
 
 export const server = createServer({
@@ -66,11 +58,11 @@ export const server = createServer({
   factories: {
     [ENDPOINTS.meals]: Factory.extend({
       ...defaultProperties,
-      rating: () => mealProperties.rating(false),
+      rating: () => rating(false),
     }),
     [ENDPOINTS.highRate]: Factory.extend({
       ...defaultProperties,
-      rating: () => mealProperties.rating(true),
+      rating: () => rating(true),
     }),
   },
   seeds(server) {
