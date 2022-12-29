@@ -64,6 +64,13 @@ function ContextProvider({ children }: ContextProviderProps) {
       .then(([mealsRes, highRateRes]) => {
         setFetchedMeals([...mealsRes.meals, ...highRateRes.hightRates]);
       })
+      .catch(() =>
+        showNotification({
+          title: 'Oops!',
+          message: 'Something went wrong when fetching meals',
+          color: 'red',
+        }),
+      )
       .finally(() => setLoadingMeals(false));
   }, []);
 

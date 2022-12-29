@@ -75,7 +75,7 @@ function OrdersPage() {
               <Image src={Salad} />
               <Title size='h2'>No orders placed yet!</Title>
               <Text>
-                Go to the <NavLink to={ROUTES.menu}>menu page</NavLink> and some
+                Go to the <NavLink to={ROUTES.menu}>menu page</NavLink> and add some
               </Text>
             </Flex>
           )}

@@ -1,13 +1,13 @@
 import { useState, useContext, useCallback, useMemo } from 'react';
 import Layout from '@/components/Layout/MainLayout';
-import { Button, Container, Flex, Grid } from '@mantine/core';
+import { Container, Flex } from '@mantine/core';
 import Carousel from '@/components/Carousel';
 import Headlines from '@/components/Headlines';
 import { AppContext } from '@/context';
-import MealCard from '@/components/MealCard';
+import MealsGrid from '@/components/MealsGrid';
 
 function MealsMenu() {
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(9);
   const [limitHighRate, setLimitHighRate] = useState(8);
 
   const { fetchedMeals, mealOrders, handleOrdersLogic, handleFavoriteLogic, loadingFetchMeals } =
@@ -18,30 +18,26 @@ function MealsMenu() {
     [mealOrders],
   );
 
-  const renderOtherMeals = fetchedMeals.slice(0, limit).map((meal) => (
-    <Grid.Col xs={12} sm={6} md={4} lg={3} key={meal.id}>
-      <MealCard
-        alreadyOnCart={isAlreadyOnCart(meal.id)}
-        onAddToCart={handleOrdersLogic}
-        onClickFavorite={handleFavoriteLogic}
-        {...meal}
-      />
-    </Grid.Col>
-  ));
-
   const handleFetchMore = () => {
-    setLimitHighRate((prevState) => prevState + 8);
+    setLimitHighRate((prevState) => prevState + 9);
   };
 
   const handleShowMoreMeals = () => {
     setLimit((prevState) => prevState + 8);
   };
 
-  const memoizedMeals = useMemo(() => {
+  const memoizedHighRateMeals = useMemo(() => {
     if (fetchedMeals.length) {
       return fetchedMeals.filter((item) => item?.rating === 5).slice(0, limitHighRate);
     } else return [];
   }, [limitHighRate, fetchedMeals]);
+
+  const memoizedMeals = useMemo(() => {
+    if (fetchedMeals.length) {
+      return fetchedMeals.slice(0, limit);
+    }
+    return [];
+  }, [limit, fetchedMeals]);
 
   return (
     <Layout>
@@ -51,24 +47,20 @@ function MealsMenu() {
           isOnCart={isAlreadyOnCart}
           loading={loadingFetchMeals}
           carouselName='Best Sellers'
-          carouselData={memoizedMeals}
+          carouselData={memoizedHighRateMeals}
           fetchMore={handleFetchMore}
           onAddToCart={handleOrdersLogic}
           onClickFavorite={handleFavoriteLogic}
         />
         <Container size='md'>
-          <Grid my={50}>
-            {renderOtherMeals}
-            <Grid.Col py={30} span={12}>
-              <Flex justify='center'>
-                {limit <= fetchedMeals.length ? (
-                  <Button onClick={handleShowMoreMeals} radius='lg' px={30}>
-                    See more meals
-                  </Button>
-                ) : null}
-              </Flex>
-            </Grid.Col>
-          </Grid>
+          <MealsGrid
+            isAlreadyOnCart={isAlreadyOnCart}
+            showMoreButton={limit <= fetchedMeals.length}
+            onShowMore={handleShowMoreMeals}
+            mealsData={memoizedMeals}
+            onAddToCart={handleOrdersLogic}
+            onClickFavorite={handleFavoriteLogic}
+          />
         </Container>
       </Flex>
     </Layout>

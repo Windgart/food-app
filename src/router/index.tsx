@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Home, ErrorPage, Orders, MealsMenu } from '@/pages';
+import { Home, ErrorPage, Orders, MealsMenu, Favorites } from '@/pages';
 import { ROUTES } from '@/utils/constants';
 
 const router = createBrowserRouter([
@@ -14,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: ROUTES.myOrders,
     element: <Orders />,
+  },
+  {
+    path: ROUTES.myFavorites,
+    element: <Favorites />,
   },
   {
     path: '*',
