@@ -1,17 +1,33 @@
-import { useMemo, useContext } from 'react';
+import { useMemo, useContext, useState } from 'react';
 import { AppContext } from '@/context';
 import Layout from '@/components/Layout/MainLayout';
 import { IconTrashX } from '@tabler/icons';
-import { Flex, Card, Text, Group, Title, ActionIcon, Image, Progress, Badge } from '@mantine/core';
+import {
+  Flex,
+  Card,
+  Text,
+  Group,
+  Title,
+  ActionIcon,
+  Image,
+  Progress,
+  Badge,
+  Modal,
+  Button,
+} from '@mantine/core';
 import Headines from '@/components/Headlines';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '@/utils/constants';
 import Salad from '@/assets/images/salad.png';
 import { getMediaQueries } from '@/utils/UI';
+import { useToggle } from '@mantine/hooks';
 
 function OrdersPage() {
   const { mealOrders, fetchedMeals, handleOrdersLogic } = useContext(AppContext);
   const { sm } = getMediaQueries();
+
+  const [showModal, toggleModal] = useToggle();
+  const [itemToDelete, setItemToDelete] = useState<string | null>(null);
 
   const ordersData = useMemo(() => {
     return fetchedMeals.filter((meal) => mealOrders.some((mealRef) => mealRef === meal?.id));
@@ -24,19 +40,27 @@ function OrdersPage() {
     { value: 25, label: 'Order delivered', color: 'gray' },
   ];
 
-  const onClickDelete = (id: string) => () => handleOrdersLogic(id);
+  const onClickDelete = (id: string) => () => {
+    setItemToDelete(id);
+    toggleModal();
+  };
+
+  const onCloseModal = () => {
+    setItemToDelete(null);
+    toggleModal();
+  };
 
   const renderOrders = ordersData.map((order) => (
     <Card w='80%' px={40} withBorder shadow='sm' radius='md' key={order.id}>
       <Card.Section withBorder inheritPadding py='xs'>
-        <Group position='apart'>
+        <Flex direction='row' justify='space-between' align='center'>
           <Title color='base.1' size='h3'>
             {order.title}
           </Title>
           <ActionIcon color='red' onClick={onClickDelete(order.id)}>
             <IconTrashX />
           </ActionIcon>
-        </Group>
+        </Flex>
         <Text ff='Oswald' color='gray.7' size={10}>
           ORDER ID: {order.id}
         </Text>
@@ -58,6 +82,35 @@ function OrdersPage() {
 
   return (
     <Layout>
+      <Modal
+        centered
+        title={
+          <Title color='base.1' size='h3'>
+            Cancel order
+          </Title>
+        }
+        opened={showModal}
+        onClose={onCloseModal}
+      >
+        <Text> Do you really want to cancel this order?</Text>
+        <Flex mt={30} direction='row' justify='center'>
+          <Button
+            onClick={() => {
+              if (itemToDelete) {
+                handleOrdersLogic(itemToDelete);
+              }
+              onCloseModal();
+            }}
+            color='red'
+            mr={15}
+          >
+            Remove
+          </Button>
+          <Button onClick={onCloseModal} color='blue'>
+            Cancel
+          </Button>
+        </Flex>
+      </Modal>
       <Flex
         pt={85}
         pb={20}
