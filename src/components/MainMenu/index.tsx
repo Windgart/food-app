@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 import { useMediaQuery, useToggle } from '@mantine/hooks';
 import { options } from './menuConfigs';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function MainMenu() {
   const { breakpoints, colors } = useMantineTheme();
@@ -21,6 +21,8 @@ function MainMenu() {
 
   const { mealOrders } = useContext(AppContext);
 
+  const { pathname } = useLocation();
+
   const n = useNavigate();
   const navigate = (url: string) => () => n(url);
 
@@ -28,7 +30,14 @@ function MainMenu() {
 
   const renderOptions = options.map(({ id, name, to }) => (
     <Indicator label={id === 4 ? mealOrders?.length : ''} inline size={id === 4 ? 14 : 0} key={id}>
-      <UnstyledButton onClick={navigate(to)}>
+      <UnstyledButton
+        pb={2}
+        px={5}
+        sx={{
+          borderBottom: `2px solid ${pathname === to ? 'white' : 'transparent'}`,
+        }}
+        onClick={navigate(to)}
+      >
         <Flex direction='row' align='center'>
           <Text ff='Raleway' fw={500} size={15} color='contrast.1'>
             {name}
@@ -57,8 +66,9 @@ function MainMenu() {
               position='middle-center'
             >
               <NavLink
+                active={pathname === item.to}
                 onClick={navigate(item.to)}
-                variant='filled'
+                variant='light'
                 key={item.id}
                 label={item.name}
               />
